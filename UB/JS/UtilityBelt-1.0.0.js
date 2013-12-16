@@ -293,7 +293,60 @@ UtilityBelt = UB = (function () {
          */
         isIterable: function(value) {
             return (value && typeof value !== 'string') ? value.length !== undefined : false;
-        }
+        },
+		
+		/**
+         * Clone almost any type of variable including array, object, DOM nodes and Date without keeping the old reference.
+         * @param {Object} item The variable to clone.
+         * @return {Object} clone
+         */
+		clone: function(item) {
+            if (item === null || item === undefined) {
+                return item;
+            }
 
+            // DOM nodes
+            if (item.nodeType && item.cloneNode) {
+                return item.cloneNode(true);
+            }
+
+            // Strings
+            var type = toString.call(item);
+
+            // Dates
+            if (type === '[object Date]') {
+                return new Date(item.getTime());
+            }
+
+            var i, j, k, clone, key;
+
+            // Arrays
+            if (type === '[object Array]') {
+                i = item.length;
+
+                clone = [];
+
+                while (i--) {
+                    clone[i] = this.clone(item[i]);
+                }
+            }
+            // Objects
+            else if (type === '[object Object]' && item.constructor === Object) {
+                clone = {};
+
+                for (key in item) {
+                    clone[key] = this.clone(item[key]);
+                }
+
+                if (enumerables) {
+                    for (j = enumerables.length; j--;) {
+                        k = enumerables[j];
+                        clone[k] = item[k];
+                    }
+                }
+            }
+
+            return clone || item;
+        }
     }
 })();
