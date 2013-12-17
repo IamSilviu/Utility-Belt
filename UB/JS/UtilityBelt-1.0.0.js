@@ -154,14 +154,45 @@ UtilityBelt = UB = (function () {
         },
 
         /**
-         * Returns `true` if the passed value is a JavaScript Date object, `false` otherwise.
+         * Returns 'true' if the passed value is a JavaScript Date object, 'false' otherwise.
          * @param {Object} object The object to test.
          * @return {Boolean}
          */
         isDate: function(value) {
             return toString.call(value) === '[object Date]';
         },
+		
+		/**
+         * Returns week 'number' if the passed value is a JavaScript Date object, '-1' otherwise.
+         * @param {Object} object The object to test.
+         * @return {Boolean}
+         */
+		getWeek: function(value) {
+		
+			if(!this.isDate(value)) return -1;
+			
+			// Create a copy of this date object  
+            var target = this.clone(value),
 
+            // ISO week date weeks start on monday so correct the day number  
+            dayNr = (value.getDay() + 6) % 7;
+
+            target.setDate(target.getDate() - dayNr + 3);
+            var firstThursday = target.valueOf();
+
+            // Set the target to the first thursday of the year  
+            // First set the target to january first  
+            target.setMonth(0, 1);
+			
+            // Not a thursday? Correct the date to the next thursday  
+            if (target.getDay() != 4) {
+                target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+            }
+
+            // The weeknumber is the number of weeks between the   
+            // first thursday of the year and the thursday in the target week  
+            return 1 + Math.ceil((firstThursday - target) / 604800000);	
+		},
         /**
          * Returns 'true' if the passed value is a String that matches the MS Date JSON encoding format
          * @param {String} value The string to test
