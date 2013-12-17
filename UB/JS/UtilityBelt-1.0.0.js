@@ -154,7 +154,7 @@ UtilityBelt = UB = (function () {
         },
 
         /**
-         * Returns 'true' if the passed value is a JavaScript Date object, 'false' otherwise.
+         * Returns `true` if the passed value is a JavaScript Date object, `false` otherwise.
          * @param {Object} object The object to test.
          * @return {Boolean}
          */
@@ -163,7 +163,7 @@ UtilityBelt = UB = (function () {
         },
 		
 		/**
-         * Returns week 'number' if the passed value is a JavaScript Date object, '-1' otherwise.
+         * Returns week `number` if the passed value is a JavaScript Date object, `-1` otherwise.
          * @param {Object} object The object to test.
          * @return {Boolean}
          */
@@ -194,7 +194,7 @@ UtilityBelt = UB = (function () {
             return 1 + Math.ceil((firstThursday - target) / 604800000);	
 		},
         /**
-         * Returns 'true' if the passed value is a String that matches the MS Date JSON encoding format
+         * Returns `true` if the passed value is a String that matches the MS Date JSON encoding format
          * @param {String} value The string to test
          * @return {Boolean}
          */
@@ -222,13 +222,7 @@ UtilityBelt = UB = (function () {
         },
 
         /**
-         * @private
-         */
-        isSimpleObject: function(value) {
-            return value instanceof Object && value.constructor === Object;
-        },
-        /**
-         * Returns `true` if the passed value is a JavaScript 'primitive', a string, number or Boolean.
+         * Returns `true` if the passed value is a JavaScript `primitive`, a string, number or Boolean.
          * @param {Object} value The value to test.
          * @return {Boolean}
          */
